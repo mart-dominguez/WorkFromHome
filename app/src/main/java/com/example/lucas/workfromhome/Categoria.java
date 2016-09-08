@@ -1,12 +1,13 @@
 package com.example.lucas.workfromhome;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by mdominguez on 07/09/16.
  */
-public class Categoria {
+public class Categoria implements Serializable {
     private Integer id;
     private String descripcion;
     private List<Trabajo> trabajos;
