@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">WorkFromHome</string>
+    <string name="postularseTitulo">Postularse a esta oferta</string>
+    <string name="compartirTitulo">Compartir esta oferta</string>
+    <string name="subirMiOferta">Crear una oferta</string>
+    <string name="action_settings">Settings</string>
+    <string name="perfil">Mi Perfil</string>
+    <string name="salir">Salir</string>
+</resources>
