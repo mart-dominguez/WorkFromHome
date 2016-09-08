@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private ListView lista;
     private String tituloOferta;
+    private Trabajo ofertaSeleccionada;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +51,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
                                     ContextMenu.ContextMenuInfo menuInfo) {
+        Log.d("MainActivity999","PASO 1: onCreateContextMenu");
         menu.setHeaderTitle("Acciones");
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.contextmenu, menu);
         super.onCreateContextMenu(menu, v, menuInfo);
 
         if (v.getId() == R.id.listaOfertas) {
+            ((ListView)v).getItemAtPosition(0);
             //usar getItemAtPosition() para obtener el elemento
         }
     }
@@ -64,13 +68,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         switch(item.getItemId()){
             case R.id.postularse:
-                Toast.makeText(this, "Te has postulado a esta oferta. Nos comunicaremos a la brevedad...",
+                Toast.makeText(this, "Te has postulado a esta oferta: << " +ofertaSeleccionada.getDescripcion()+">>.  Nos comunicaremos a la brevedad...",
                         Toast.LENGTH_LONG).show();
                 break;
             case R.id.compartir:
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "Ey! No te pierdas esta oferta!");
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "Ey! No te pierdas esta oferta! "+ofertaSeleccionada.getDescripcion());
                 sendIntent.setType("text/plain");
                 startActivity(sendIntent);
                 break;
@@ -86,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.createMyJob) {
             return true;
         }
 
@@ -95,6 +99,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Log.d("MainActivity999","PASO 2: onItemLongClick");
+        ofertaSeleccionada = (Trabajo) adapterView.getItemAtPosition(i);
+
         return false;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //http://www.proyectosimio.com/es/programacion-android-startactivityforresult-lanzar-una-actividad-para-recibir-un-resultado/
+        //http://www.limecreativelabs.com/startactivityforresult-actividades-que-devuelven-resultados/
+        ofertaSeleccionada = data.getParcelableExtra("trabajoNew");
     }
 }

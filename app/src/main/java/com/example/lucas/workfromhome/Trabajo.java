@@ -1,12 +1,13 @@
 package com.example.lucas.workfromhome;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Random;
 
 /**
  * Created by mdominguez on 07/09/16.
  */
-public class Trabajo {
+public class Trabajo implements Serializable{
 
     private Integer id;
     private String descripcion;
